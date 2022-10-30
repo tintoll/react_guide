@@ -54,13 +54,15 @@ const ExpenseForm = (props) => {
       date: new Date(enteredDate),
     };
 
-    props.onSaveExpenseData(expenseData)
+    props.onSaveExpenseData(expenseData);
 
     // 각 input의 값을 초기화할때 value에 state값을 양방향 바인딩 시키고
     // state 값을 초기화 해준다
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
+
+    props.onCancel();
   };
 
   return (
@@ -96,6 +98,9 @@ const ExpenseForm = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
