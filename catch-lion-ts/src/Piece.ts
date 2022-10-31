@@ -24,7 +24,7 @@ export abstract class DefaultPiece implements Piece {
     public readonly ownerType: PlayerType
   ) {}
   move(from: Cell, to: Cell): MoveResult {
-    if (!this.canMove(to.getPiece())) {
+    if (!this.canMove(to.position)) {
       throw new Error('can no move!');
     }
 
