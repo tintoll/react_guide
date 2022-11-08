@@ -19,10 +19,10 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <AddUser onAddUser={addUserHandler} />
       <UserList users={userList} />
-    </div>
+    </>
   );
 }
 
