@@ -45,36 +45,36 @@ const Login = (props) => {
     isValid: null,
   });
 
-  // useEffect(() => {
-  //   // 검은은 타이핑할때마자 하지 않고 0.5초 후에 한번만 하도록 처리
-  //   // 이걸 디바운스라고 한다.
-  //   const identifier = setTimeout(() => {
-  //     console.log("Form Valid Check");
-  //     setFormIsValid(
-  //       enteredEmail.includes("@") && enteredPassword.trim().length > 6
-  //     );
-  //   }, 500);
+  useEffect(() => {
+    // 검은은 타이핑할때마자 하지 않고 0.5초 후에 한번만 하도록 처리
+    // 이걸 디바운스라고 한다.
+    const identifier = setTimeout(() => {
+      console.log("Form Valid Check");
+      setFormIsValid(
+        emailState.isValid && passwordState.isValid
+      );
+    }, 500);
 
-  //   return () => {
-  //     console.log("CLEANUP");
-  //     clearTimeout(identifier);
-  //   };
-  // }, [enteredEmail, enteredPassword]);
+    return () => {
+      console.log("CLEANUP");
+      clearTimeout(identifier);
+    };
+  }, [emailState.isValid, passwordState.isValid]);
 
   const emailChangeHandler = (event) => {
     dispatchEmail({ type: "USER_INPUT", value: event.target.value });
 
-    setFormIsValid(
-      event.target.value.includes("@") && passwordState.value.trim().length > 6
-    );
+    // setFormIsValid(
+    //   event.target.value.includes("@") && passwordState.value.trim().length > 6
+    // );
   };
 
   const passwordChangeHandler = (event) => {
     dispatchPassword({ type: "USER_INPUT", value: event.target.value });
 
-    setFormIsValid(
-      emailState.value.includes("@") && event.target.value.trim().length > 6
-    );
+    // setFormIsValid(
+    //   emailState.value.includes("@") && event.target.value.trim().length > 6
+    // );
   };
 
   const validateEmailHandler = () => {
@@ -94,9 +94,8 @@ const Login = (props) => {
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <div
-          className={`${classes.control} ${
-            emailState.isValid === false ? classes.invalid : ""
-          }`}
+          className={`${classes.control} ${emailState.isValid === false ? classes.invalid : ""
+            }`}
         >
           <label htmlFor="email">E-Mail</label>
           <input
@@ -108,9 +107,8 @@ const Login = (props) => {
           />
         </div>
         <div
-          className={`${classes.control} ${
-            passwordState.isValid === false ? classes.invalid : ""
-          }`}
+          className={`${classes.control} ${passwordState.isValid === false ? classes.invalid : ""
+            }`}
         >
           <label htmlFor="password">Password</label>
           <input
