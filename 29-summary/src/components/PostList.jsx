@@ -23,6 +23,7 @@ export default function PostList({ isPosting, onStopPosting }) {
           <NewPost
             onChangeBody={changeBodyHandler}
             onChangeAuthor={changeAuthorHandler}
+            onCancel={onStopPosting}
           />
         </Modal>
       )}
