@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import MoviesList from "./components/MoviesList";
+import AddMovie from "./components/AddMovie";
 import "./App.css";
 
 function App() {
@@ -12,27 +13,41 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch("firebase 주소");
 
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
 
       const data = await response.json();
-      const transformedMovies = data.results.map((movieData) => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
-        };
-      });
-      setMovies(transformedMovies);
+
+      const loadMovies = [];
+      for (const key in data) {
+        loadMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].opening_crawl,
+          releaseDate: data[key].release_date,
+        });
+      }
+      setMovies(loadMovies);
     } catch (error) {
       setError(error.message);
     }
     setIsLoading(false);
   }, []);
+
+  async function addMovieHandler(movie) {
+    const response = await fetch("firebase 주소", {
+      method: "POST",
+      body: JSON.stringify(movie),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
 
   // useEffect에 의존을 주는게 좋은데 함수는 사용할수 없다. 그래서 useCallback으로 감
   useEffect(() => {
@@ -54,6 +69,9 @@ function App() {
 
   return (
     <React.Fragment>
+      <section>
+        <AddMovie onAddMovie={addMovieHandler} />
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
