@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameIsValid, setEnteredNameIsValid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
-  const nameInputRef = useRef();
+
+  const enteredNameIsValid = enteredName.trim() !== "";
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const nameInputHandler = (event) => {
     setEnteredName(event.target.value);
@@ -12,10 +13,6 @@ const SimpleInput = (props) => {
 
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
-    if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
-      return;
-    }
   };
 
   const formSubmissionHandler = (event) => {
@@ -23,19 +20,15 @@ const SimpleInput = (props) => {
 
     setEnteredNameTouched(true);
     if (enteredName.trim() === "") {
-      setEnteredNameIsValid(false);
       return;
     }
 
-    setEnteredNameIsValid(true);
     console.log(enteredName);
-    console.log(nameInputRef.current.value);
 
     // nameInputRef.current.value = ''; // Dom에 직접 접근하는 것이기 때문에 사용하지 말자
     setEnteredName("");
+    setEnteredNameTouched(false);
   };
-
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
   const nameInputClass = nameInputIsInvalid
     ? "form-control invalid"
@@ -48,7 +41,6 @@ const SimpleInput = (props) => {
         <input
           type="text"
           id="name"
-          ref={nameInputRef}
           onChange={nameInputHandler}
           onBlur={nameInputBlurHandler}
           value={enteredName}
