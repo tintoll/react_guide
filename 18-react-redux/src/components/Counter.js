@@ -4,15 +4,15 @@ import { counterActions } from "../store/index";
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
-  const show = useSelector((state) => state.showCounter);
+  const counter = useSelector((state) => state.counter.counter);
+  const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = () => {
     dispatch(counterActions.increment());
   };
 
   const increaseHandler = () => {
-    dispatch(counterActions.increase(10));
+    dispatch(counterActions.increase(10)); // {type:SOM_UNIQUE_IDENTIFIER, payload:10}
   };
 
   const decrementHandler = () => {
