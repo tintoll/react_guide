@@ -29,7 +29,9 @@ function App() {
     }
 
     // 커스텀으로 생성한 action 생성자를 호출한다
-    dispatch(sendCartData(cart));
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
+    }
   }, [cart, dispatch]);
 
   return (

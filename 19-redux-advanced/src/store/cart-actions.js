@@ -4,9 +4,7 @@ import { uiActions } from "./ui-slice";
 export const fetchCartData = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://react-test-ac133-default-rtdb.firebaseio.com/cart.json"
-      );
+      const response = await fetch("https://tt/cart.json");
       if (!response.ok) {
         throw new Error("error");
       }
@@ -16,7 +14,12 @@ export const fetchCartData = () => {
 
     try {
       const cartData = await fetchData();
-      dispatch(cartActions.replceCart(cartData));
+      dispatch(
+        cartActions.replceCart({
+          items: cartData.items || [],
+          totalQuantity: cartData.totalQuantity || 0,
+        })
+      );
     } catch (error) {
       dispatch(
         uiActions.showNotification({
@@ -41,13 +44,13 @@ export const sendCartData = (cart) => {
     );
 
     const sendRequest = async () => {
-      const response = await fetch(
-        "https://react-test-ac133-default-rtdb.firebaseio.com/cart.json",
-        {
-          method: "PUT",
-          body: JSON.stringify(cart),
-        }
-      );
+      const response = await fetch("https://tt/cart.json", {
+        method: "PUT",
+        body: JSON.stringify({
+          items: cart.items,
+          totalQuantity: cart.totalQuantity,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("error");
