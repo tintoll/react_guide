@@ -5,6 +5,7 @@ import Products from "./components/Shop/Products";
 import { Fragment, useEffect } from "react";
 import Notification from "./components/UI/Notification";
 import { uiActions } from "./store/ui-slice";
+import { sendCartData } from "./store/cart-slice";
 
 let isInitial = true;
 
@@ -19,44 +20,13 @@ function App() {
   const notification = useSelector((state) => state.ui.notification);
 
   useEffect(() => {
-    const sendCartData = async () => {
-      dispatch(
-        uiActions.showNotification({
-          state: "pending",
-          title: "Sending....",
-          message: "Sending Cart data!",
-        })
-      );
-      const response = await fetch("https:///cart", {
-        method: "PUT",
-        body: JSON.stringify(cart),
-      });
-
-      if (!response.ok) {
-        throw new Error("error");
-      }
-
-      dispatch(
-        uiActions.showNotification({
-          state: "success",
-          title: "Success!",
-          message: "Sendt Cart data successfuly",
-        })
-      );
-    };
     if (isInitial) {
       isInitial = false;
       return;
     }
-    sendCartData().catch((error) => {
-      dispatch(
-        uiActions.showNotification({
-          state: "error",
-          title: "Error!",
-          message: "Sent Cart data failed",
-        })
-      );
-    });
+
+    // 커스텀으로 생성한 action 생성자를 호출한다
+    dispatch(sendCartData(cart));
   }, [cart, dispatch]);
 
   return (
