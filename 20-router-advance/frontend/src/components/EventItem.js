@@ -1,9 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useSubmit } from "react-router-dom";
 import classes from "./EventItem.module.css";
 
 function EventItem({ event }) {
+  const submit = useSubmit();
   function startDeleteHandler() {
-    // ...
+    const preceed = window.confirm("Are you sure?");
+    if (preceed) {
+      // 첫번째 인자는 데이터, 두번째 인자는 옵션
+      submit(null, { method: "delete" });
+    }
   }
 
   return (
