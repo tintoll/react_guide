@@ -38,6 +38,10 @@ export async function action({ request }) {
   }
 
   // 인증 토큰을 받는 부분
+  const resData = await response.json();
+  const token = resData.token;
+
+  localStorage.setItem("token", token);
 
   return redirect("/");
 }
