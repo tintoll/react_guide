@@ -42,6 +42,10 @@ export async function action({ request }) {
   const token = resData.token;
 
   localStorage.setItem("token", token);
+  // 만료 시간도 저장해 놓는다.
+  const expiration = new Date();
+  expiration.setHours(expiration.getHours() + 1);
+  localStorage.setItem("expiration", expiration.toISOString());
 
   return redirect("/");
 }
