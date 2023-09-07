@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import classes from "./NewTodo.module.css";
 
 const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
   // useRef 정의시 정의되는 input태그의 타입을 정의해줘야한다.
@@ -14,7 +15,7 @@ const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
     props.onAddTodo(enteredText);
   };
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className={classes.form}>
       <label htmlFor="text">Todo text</label>
       <input type="text" id="text" ref={todoInputRef} />
       <button>Add Todo</button>

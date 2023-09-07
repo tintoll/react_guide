@@ -2,11 +2,11 @@
 
 import Todo from "../models/todo";
 import TodoItem from "./TodoItem";
-
+import classes from "./Todos.module.css";
 // 추가되는 props가 있는 경우에는 <{}> 안에 정의해주면 된다.
 const Todos: React.FC<{ items: Todo[] }> = (props) => {
   return (
-    <ul>
+    <ul className={classes.todos}>
       {props.items.map((item) => (
         <TodoItem key={item.id} text={item.text} />
       ))}
