@@ -1,7 +1,10 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import classes from "./NewTodo.module.css";
+import { TodosContext } from "../store/todo-context";
 
-const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
+const NewTodo: React.FC = () => {
+  const todosCtx = useContext(TodosContext);
+
   // useRef 정의시 정의되는 input태그의 타입을 정의해줘야한다.
   const todoInputRef = useRef<HTMLInputElement>(null);
   const submitHandler = (event: React.FormEvent) => {
@@ -12,7 +15,7 @@ const NewTodo: React.FC<{ onAddTodo: (text: string) => void }> = (props) => {
     if (enteredText.trim().length === 0) {
       return;
     }
-    props.onAddTodo(enteredText);
+    todosCtx.addTodo(enteredText);
   };
   return (
     <form onSubmit={submitHandler} className={classes.form}>
